@@ -1,8 +1,11 @@
 <script>
-	import _ from 'lodash'
+	import _ from 'lodash';
+	import {onMount} from 'svelte';
 	export let name;
 
-	
+
+
+
 
 
 
@@ -10,7 +13,32 @@
 
 <main>
 	<h1>{name}</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	
+	<div>
+		<label for="category">Please Select a Category</label>
+		<select name="category" id="category">
+			<option value=""></option>
+		</select>
+	</div>
+
+	<div>
+		<label for="difficulty">Please Select a Difficulty</label>
+		<select name="difficulty" id="difficulty">
+			<option value="easy">Easy</option>
+			<option value="medium">Medium</option>
+			<option value="hard">Easy</option>
+		</select>
+	</div>
+
+	<button>Start Game</button>
+
+	<div>
+		<h3>A Question?</h3>
+		<button>Answer</button>
+		<button>Answer</button>
+		<button>Answer</button>
+		<button>Answer</button>
+	</div>
 </main>
 
 <style>
