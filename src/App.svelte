@@ -3,27 +3,43 @@
 	import {onMount} from 'svelte';
 	export let name;
 
+	let categories = [];
+	let selectedCategory = '';
+	let selectedDifficulty = '';
 
+	onMount(function() {
+		fetch('https://opentdb.com/api_category.php')
+			.then(res => res.json())
+			.then((data) => {
+				console.log(data)
+				categories = data.trivia_categories
+			})
+	})
 
-
-
-
+	async function getQuestions() {
+		// todo: validate inputs
+		const response = await fetch(`https://opentdb.com/api.php?amount=10&category=${selectedCategory}&difficulty=${selectedDifficulty}&type=multiple`);
+		const data = await response.json();
+	}
 
 </script>
+
 
 <main>
 	<h1>{name}</h1>
 	
-	<div>
+	<div class="categoryContainer">
 		<label for="category">Please Select a Category</label>
-		<select name="category" id="category">
-			<option value=""></option>
+		<select bind:value="{selectedCategory}" name="category" id="category">
+			{#each categories as category}
+			<option value="{category.id}">{category.name}</option>
+			{/each}
 		</select>
 	</div>
 
-	<div>
+	<div class="difficultyContainer">
 		<label for="difficulty">Please Select a Difficulty</label>
-		<select name="difficulty" id="difficulty">
+		<select bind:value="{selectedDifficulty}" name="difficulty" id="difficulty">
 			<option value="easy">Easy</option>
 			<option value="medium">Medium</option>
 			<option value="hard">Easy</option>
@@ -32,7 +48,7 @@
 
 	<button>Start Game</button>
 
-	<div>
+	<div class="quizContainer">
 		<h3>A Question?</h3>
 		<button>Answer</button>
 		<button>Answer</button>
@@ -40,6 +56,7 @@
 		<button>Answer</button>
 	</div>
 </main>
+
 
 <style>
 	main {
