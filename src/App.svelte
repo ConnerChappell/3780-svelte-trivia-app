@@ -60,6 +60,7 @@
 	<h1>{name}</h1>
 
 	<h2>In order to begin, please select a category and a difficulty level. Then click "Start Quiz"</h2>
+	<h4>Note: In order to receive an accurate score, please only select an answer for each question once</h4>
 	
 	<div class="categoryContainer">
 		<label for="category">Category</label>
@@ -85,21 +86,24 @@
 		{#each displayQuestions as question}
 		<h3>{@html _.unescape(question.question)}</h3>
 
-			{#each question.answers as answer}
+			<div class="answerContainer">
+				{#each question.answers as answer}
 
-			{#if answer.correct === false}
-			<button on:click={incorrectAnswer}>{@html _.unescape(answer.answer)}</button>
-			{:else}
-			<button on:click={correctAnswer}>{@html _.unescape(answer.answer)}</button>
-			{/if}
+				{#if answer.correct === false}
+				<button on:click={incorrectAnswer} class="answerButton">{@html _.unescape(answer.answer)}</button>
+				{:else}
+				<button on:click={correctAnswer} class="answerButton">{@html _.unescape(answer.answer)}</button>
+				{/if}
 
-			{/each}
+				{/each}
+			</div>
+			
 		{/each}
 	</div>
 
 	<div class="score">
-		<p>Correct: { correct }</p>
-		<p>Incorrect: { incorrect }</p>
+		<p class="correctScore">Correct: { correct }</p>
+		<p class="incorrectScore">Incorrect: { incorrect }</p>
 	</div>
 </main>
 
@@ -117,6 +121,9 @@
 		text-transform: uppercase;
 		font-size: 4em;
 		font-weight: 100;
+	}
+	h4 {
+		color: #FF5A5F;
 	}
 	.categoryContainer, .difficultyContainer {
 		margin: 15px;
@@ -136,9 +143,36 @@
 		padding: 10px 15px;
 		transition: all .4s;
 	}
+	.quizContainer {
+		margin: 15px 0 15px 0;
+	}
+	.quizContainer h3 {
+		margin-bottom: 5px;
+	}
+	.answerContainer {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
 	button:hover {
 		background-color: #FF5A5F;
 		color: #FFF;
+	}
+	.answerButton {
+		border-color: #000;
+		color: #000;
+		width: 200px;
+	}
+	.answerButton:hover {
+		background-color: #000;
+		color: #FFF;
+	}
+	.correctScore {
+		color: #1DB954;
+	}
+	.incorrectScore {
+		color: #FF0000;
 	}
 
 	@media (min-width: 640px) {
